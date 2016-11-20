@@ -57,7 +57,7 @@ function accept (req, res)
                 		console.log("Called getLotInfo with params(id='"+id+"', lot='"+lot+"')");
                 	} catch(e) {
                 		console.log("getLotInfo with params(id='"+id+"', lot='"+lot+"') is failed!");
-                		res.end(querystring.stringify(JSON.stringify({"text":"Извините, не удалось получить информацию об этом лоте, попробуйте позже :("})));
+                		res.end(querystring.stringify('{"text":"Извините, не удалось получить информацию об этом лоте, попробуйте позже :("}'));
                 	}
 					break;
                 case "showLots":
@@ -66,7 +66,7 @@ function accept (req, res)
                 		console.log("Called showLots with params(id='"+id+"')");
                 	} catch(e) {
                 		console.log("showLots with params(id='"+id+"') is failed!");
-                		res.end(querystring.stringify(JSON.stringify({"text":"Извините, не удалось показать ваши лоты, попробуйте позже :("})));
+                		res.end(querystring.stringify('"text":"Извините, не удалось показать ваши лоты, попробуйте позже :("}'));
                 	}
                     break;
                 case "showBids":
@@ -75,7 +75,7 @@ function accept (req, res)
                 		console.log("Called showBids with params(id='"+id+"')");
                 	} catch(e) {
                 		console.log("showBids with params(id='"+id+"') is failed!");
-                		res.end(querystring.stringify(JSON.stringify({"text":"Извините, не удалось показать ваши выигрышные ставки, попробуйте позже :("})));
+                		res.end(querystring.stringify('{"text":"Извините, не удалось показать ваши выигрышные ставки, попробуйте позже :("}'));
                 	}
                     break;
                 case "makeBid":
@@ -84,7 +84,7 @@ function accept (req, res)
                 		console.log("Called makeBid with params(id='"+id+"', lot='"+lot+"', price='"+price+"')");
                 	} catch(e) {
                 		console.log("makeBid with params(id='"+id+"', lot='"+lot+"', price='"+price+"') is failed!");
-                		res.end(querystring.stringify(JSON.stringify({"text":"Извините, не удалось сделать ставку, попробуйте позже :("})));
+                		res.end(querystring.stringify('{"text":"Извините, не удалось сделать ставку, попробуйте позже :("}'));
                 	}
                     break;
                 case "createLot":
@@ -93,7 +93,7 @@ function accept (req, res)
                 		console.log("Called createLot with params(id='"+id+"', lot='"+name+"', description='"+description+"', price='"+price+"', start='"+start+"', end='"+end+"')");
                 	} catch(e) {
                 		console.log("createLot with params(id='"+id+"', lot='"+name+"', description='"+description+"', price='"+price+"', start='"+start+"', end='"+end+"') is failed!");
-                		res.end(querystring.stringify(JSON.stringify({"text":"Извините, не удалось добавить новый лот, попробуйте позже :("})));
+                		res.end(querystring.stringify('{"text":"Извините, не удалось добавить новый лот, попробуйте позже :("}'));
                 	}
                     break;
 				default:
@@ -103,13 +103,13 @@ function accept (req, res)
         	});
 		} catch (e)
 		{
-			res.end(querystring.stringify(JSON.stringify({"text":"Извините, что-то пошло не так... ("+e+")"})));
+			res.end(querystring.stringify('{"text":"Извините, что-то пошло не так... ("+e+")"}'));
 		}
 	}
 	else
 	{
 		console.log("Unkown method (expected POST)!");
-		res.end(querystring.stringify(JSON.stringify({"test":"Неизвестный метод передачи данных (ожидается POST)!"})));
+		res.end(querystring.stringify('{"test":"Неизвестный метод передачи данных (ожидается POST)!"}'));
 	}
 	return 0;
 }

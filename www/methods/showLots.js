@@ -3,7 +3,7 @@ pool.query('SELECT name, start_time, end_time FROM lots WHERE owner_id='+id, fun
         {
                 console.log(err);
                 string = err;
-                res.end (querystring.stringify(JSON.stringify({"text":string})));
+                res.end (querystring.stringify('{"text":string}'));
                 return;
         }
 	for (var k=0; k<res.rows.length; k++)
@@ -16,5 +16,5 @@ pool.query('SELECT name, start_time, end_time FROM lots WHERE owner_id='+id, fun
 	{
        		string += res.rows[k].name+" ("+( (res.rows[k].start_time<=Math.round(getTime()/1000))&&(res.rows[k].end_time>Math.round(getTime()/1000)) ? "Идут торги" : ( (res.rows[k].start_time>Math.round(getTime()/1000)) ? "Торги ещё не начались" : "Торги закончены" ) );
 	}
-	res.end (querystring.stringify(JSON.stringify({"text":string})));
+	res.end (querystring.stringify('{"text":string}'));
 });
