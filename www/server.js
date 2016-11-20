@@ -37,17 +37,19 @@ function accept (req, res)
 		console.log("Get new POST request");
 		var body="";
 		req.on('data', function (data)
-        	{
-            		body +=data;
-        	});
+        {
+        	body +=data;
+        });
         try {
-        	req.on('end',function()
+    	    req.on('end',function()
         	{
-			try {var POST = querystring.parse(body);} catch(e) {
+			try {
+				var json = JSON.parse(querystring.parse(body));
+			} catch(e) {
 				console.log("Can't parce this POST: "+body);
 				return 1;
 			}
-			var id = url_parts.query.q.id;
+			var id = json.id;
 			switch(data.method) {
 				case "getLotInfo":
                 	try {
@@ -55,7 +57,7 @@ function accept (req, res)
                 		console.log("Called getLotInfo with params(id='"+id+"', lot='"+lot+"')");
                 	} catch(e) {
                 		console.log("getLotInfo with params(id='"+id+"', lot='"+lot+"') is failed!");
-                		res.end({"text":"Извините, не удалось получить информацию об этом лоте, попробуйте позже :("});
+                		res.end(JSON.stringify(querystring.stringify({"text":"Извините, не удалось получить информацию об этом лоте, попробуйте позже :("})));
                 	}
 					break;
                 case "showLots":
@@ -64,7 +66,7 @@ function accept (req, res)
                 		console.log("Called showLots with params(id='"+id+"')");
                 	} catch(e) {
                 		console.log("showLots with params(id='"+id+"') is failed!");
-                		res.end({"text":"Извините, не удалось показать ваши лоты, попробуйте позже :("});
+                		res.end(JSON.stringify(querystring.stringify({"text":"Извините, не удалось показать ваши лоты, попробуйте позже :("})));
                 	}
                     break;
                 case "showBids":
@@ -73,7 +75,7 @@ function accept (req, res)
                 		console.log("Called showBids with params(id='"+id+"')");
                 	} catch(e) {
                 		console.log("showBids with params(id='"+id+"') is failed!");
-                		res.end({"text":"Извините, не удалось показать ваши выигрышные ставки, попробуйте позже :("});
+                		res.end(JSON.stringify(querystring.stringify({"text":"Извините, не удалось показать ваши выигрышные ставки, попробуйте позже :("})));
                 	}
                     break;
                 case "makeBid":
@@ -82,7 +84,7 @@ function accept (req, res)
                 		console.log("Called makeBid with params(id='"+id+"', lot='"+lot+"', price='"+price+"')");
                 	} catch(e) {
                 		console.log("makeBid with params(id='"+id+"', lot='"+lot+"', price='"+price+"') is failed!");
-                		res.end({"text":"Извините, не удалось сделать ставку, попробуйте позже :("});
+                		res.end(JSON.stringify(querystring.stringify({"text":"Извините, не удалось сделать ставку, попробуйте позже :("})));
                 	}
                     break;
                 case "createLot":
@@ -91,26 +93,26 @@ function accept (req, res)
                 		console.log("Called createLot with params(id='"+id+"', lot='"+name+"', description='"+description+"', price='"+price+"', start='"+start+"', end='"+end+"')");
                 	} catch(e) {
                 		console.log("createLot with params(id='"+id+"', lot='"+name+"', description='"+description+"', price='"+price+"', start='"+start+"', end='"+end+"') is failed!");
-                		res.end({"text":"Извините, не удалось добавить новый лот, попробуйте позже :("});
+                		res.end(JSON.stringify(querystring.stringify({"text":"Извините, не удалось добавить новый лот, попробуйте позже :("})));
                 	}
                     break;
 				default:
 					console.log("Wrong method!");
-					throw;
+					throw "Wrong method";
 			}
         	});
 		} catch (e)
 		{
-			res.end("Извините, что-то пошло не так... ("+e+")");
+			res.end(JSON.stringify(querystring.stringify("Извините, что-то пошло не так... ("+e+")")));
 		}
 	}
 	else
 	{
 		console.log("Unkown method (expected POST)!");
-		res.end("Неизвестный метод передачи данных (ожидается POST)!");
+		res.end(JSON.stringify(querystring.stringify("Неизвестный метод передачи данных (ожидается POST)!")));
 	}
 	return 0;
 }
 
-console.log("Server start and listening 0.0.0.0:81");
-http.createServer(accept).listen(81);
+console.log("Server start and listening 0.0.0.0:8888");
+http.createServer(accept).listen(8888);
