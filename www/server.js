@@ -20,7 +20,7 @@ var pool = new Pool({
   idleTimeoutMillis: idl, // close & remove clients which have been idle > 1 second
 });
 console.log("Сonnected to database with params: user='"+usr+"', password='"+pswd+"', host='"+hst+"', database='"+db+"'");
-} catch {
+} catch(e) {
 	console.log("Can't connect to database with params: user='"+usr+"', password='"+pswd+"', host='"+hst+"', database='"+db+"'");
 }
 
@@ -112,5 +112,5 @@ function accept (req, res)
 	return 0;
 }
 
-console.log("Server start and listening 0.0.0.0:80");
-http.createServer(accept).listen(80);
+http.createServer(accept).listen(81);
+console.log("Server start and listening 0.0.0.0:81");
