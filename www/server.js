@@ -20,7 +20,7 @@ var pool = new Pool({
   idleTimeoutMillis: idl, // close & remove clients which have been idle > 1 second
 });
 console.log("Сonnected to database with params: user='"+usr+"', password='"+pswd+"', host='"+hst+"', database='"+db+"'");
-} catch {
+} catch(e) {
 	console.log("Can't connect to database with params: user='"+usr+"', password='"+pswd+"', host='"+hst+"', database='"+db+"'");
 }
 
@@ -40,7 +40,8 @@ function accept (req, res)
         	{
             		body +=data;
         	});
-        	var result = req.on('end',function()
+        try {
+        	req.on('end',function()
         	{
 			try {var POST = querystring.parse(body);} catch(e) {
 				console.log("Can't parce this POST: "+body);
@@ -95,13 +96,12 @@ function accept (req, res)
                     break;
 				default:
 					console.log("Wrong method!");
-					return 1;
+					throw;
 			}
-			return 0;
         	});
-		if(result != 0)
+		} catch (e)
 		{
-			res.end("Извините, что-то пошло не так...");
+			res.end("Извините, что-то пошло не так... ("+e+")");
 		}
 	}
 	else
@@ -112,5 +112,5 @@ function accept (req, res)
 	return 0;
 }
 
-console.log("Server start and listening 0.0.0.0:80");
-http.createServer(accept).listen(80);
+console.log("Server start and listening 0.0.0.0:81");
+http.createServer(accept).listen(81);
