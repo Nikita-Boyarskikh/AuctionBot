@@ -22,10 +22,3 @@ CREATE TABLE "Lots" (
 ) WITH (
   OIDS=FALSE
 );
-
-
-
-
-ALTER TABLE "Lots" ADD CONSTRAINT "Lots_fk0" FOREIGN KEY ("owner_id") REFERENCES "Users"("ID");
-ALTER TABLE "Lots" ADD CONSTRAINT "Lots_fk1" FOREIGN KEY ("winner_id") REFERENCES "Users"("ID");
-
