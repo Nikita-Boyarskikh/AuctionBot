@@ -25,7 +25,7 @@ pool.query('SELECT COUNT(*) FROM users WHERE telegram_id='+id+')', function (err
         {
                 console.log(err);
                 string = err;
-                res.end ({"text":string});
+                res.end (querystring.stringify(JSON.stringify({"text":string})));
                 return 0;
         }
         if(res) console.log("User "+id+"authorized");
@@ -40,9 +40,9 @@ pool.query('SELECT COUNT(*) FROM users WHERE telegram_id='+id+')', function (err
 	        {
                 console.log(err);
                 string = err;
-                res.end ({"text":string});
+                res.end (querystring.stringify(JSON.stringify({"text":string})));
                 return;
 	        }
-			res.end({"text":"Ваш лот '"+name+"' успешно добавлен"});
+			res.end(querystring.stringify(JSON.stringify({"text":"Ваш лот '"+name+"' успешно добавлен"})));
 		});
 });
