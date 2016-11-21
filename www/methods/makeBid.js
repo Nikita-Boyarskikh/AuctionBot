@@ -8,7 +8,7 @@ function addUser(pool, id, other)
                 console.log("Can't create new user with telegram id='"+id+"'");
         		return;
         }
-	}
+	});
 	return;
 }
 

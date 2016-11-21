@@ -8,7 +8,7 @@ function addUser(poll, id, other)
                 console.log("Can't create new user with telegram id='"+id+"'");
         		return;
         }
-	}
+	});
 	return;
 }
 
@@ -26,7 +26,7 @@ pool.query('SELECT COUNT(*) FROM users WHERE telegram_id='+id+')', function (err
         if(err)
         {
                 console.log(err);
-                res.end (querystring.stringify('{"text":+'err+'}'));
+                res.end (querystring.stringify('{"text":'+err+'}'));
                 return 0;
         }
         if(res) console.log("User "+id+"authorized");
@@ -40,7 +40,7 @@ pool.query('SELECT COUNT(*) FROM users WHERE telegram_id='+id+')', function (err
 	        if(err)
 	        {
                 console.log(err);
-                res.end (querystring.stringify('{"text":'+err'}'));
+                res.end (querystring.stringify('{"text":'+err+'}'));
                 return;
 	        }
 			res.end(querystring.stringify('{"text":"Ваш лот '+name+' успешно добавлен"}'));
