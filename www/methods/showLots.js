@@ -14,7 +14,7 @@ pool.query('SELECT name, start_time, end_time FROM lots WHERE owner_id='+id, fun
 	var string = "Список Ваших лотов на настоящий момент:\n";
 	for (var k=0; k<results.length; k++)
 	{
-       		string += res.rows[k].name+" ("+( (res.rows[k].start_time<=Math.round(getTime()/1000))&&(res.rows[k].end_time>Math.round(getTime()/1000)) ? "Идут торги" : ( (res.rows[k].start_time>Math.round(getTime()/1000)) ? "Торги ещё не начались" : "Торги закончены" ) );
+       		string += res.rows[k].name+" ("+( (res.rows[k].start_time<=Math.round(getTime()/1000))&&(res.rows[k].end_time>Math.round(getTime()/1000)) ? "Идут торги" : ( (res.rows[k].start_time>Math.round(getTime()/1000)) ? "Торги ещё не начались" : "Торги закончены" ) )+"\n";
 	}
 	res.end (querystring.stringify('{"text":string}'));
 });
