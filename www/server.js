@@ -56,7 +56,7 @@ function accept (req, res)
                 		require("./methods/getLotInfo");
                 		console.log("Called getLotInfo with params(id='"+id+"', lot='"+lot+"')");
                 	} catch(e) {
-                		console.log("getLotInfo with params(id='"+id+"', lot='"+lot+"') is failed!");
+                		console.log("getLotInfo with params(id='"+id+"', lot='"+lot+"') is failed with error("+e+")");
                 		res.end(querystring.stringify('{"text":"Извините, не удалось получить информацию об этом лоте, попробуйте позже :("}'));
                 	}
 					break;
@@ -65,7 +65,7 @@ function accept (req, res)
                 		require("./methods/showLots");
                 		console.log("Called showLots with params(id='"+id+"')");
                 	} catch(e) {
-                		console.log("showLots with params(id='"+id+"') is failed!");
+                		console.log("showLots with params(id='"+id+"') is failed with error("+e+")");
                 		res.end(querystring.stringify('"text":"Извините, не удалось показать ваши лоты, попробуйте позже :("}'));
                 	}
                     break;
@@ -74,7 +74,7 @@ function accept (req, res)
                 		require("./methods/showBids");
                 		console.log("Called showBids with params(id='"+id+"')");
                 	} catch(e) {
-                		console.log("showBids with params(id='"+id+"') is failed!");
+                		console.log("showBids with params(id='"+id+"') is failed with error("+e+")");
                 		res.end(querystring.stringify('{"text":"Извините, не удалось показать ваши выигрышные ставки, попробуйте позже :("}'));
                 	}
                     break;
@@ -83,7 +83,7 @@ function accept (req, res)
                 		require("./methods/makeBid");
                 		console.log("Called makeBid with params(id='"+id+"', lot='"+lot+"', price='"+price+"')");
                 	} catch(e) {
-                		console.log("makeBid with params(id='"+id+"', lot='"+lot+"', price='"+price+"') is failed!");
+                		console.log("makeBid with params(id='"+id+"', lot='"+lot+"', price='"+price+"') is failed with error("+e+")");
                 		res.end(querystring.stringify('{"text":"Извините, не удалось сделать ставку, попробуйте позже :("}'));
                 	}
                     break;
@@ -92,7 +92,7 @@ function accept (req, res)
                 		require("./methods/createLot");
                 		console.log("Called createLot with params(id='"+id+"', lot='"+name+"', description='"+description+"', price='"+price+"', start='"+start+"', end='"+end+"')");
                 	} catch(e) {
-                		console.log("createLot with params(id='"+id+"', lot='"+name+"', description='"+description+"', price='"+price+"', start='"+start+"', end='"+end+"') is failed!");
+                		console.log("createLot with params(id='"+id+"', lot='"+name+"', description='"+description+"', price='"+price+"', start='"+start+"', end='"+end+"') is failed with error("+e+")");
                 		res.end(querystring.stringify('{"text":"Извините, не удалось добавить новый лот, попробуйте позже :("}'));
                 	}
                     break;
