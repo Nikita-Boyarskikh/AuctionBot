@@ -44,12 +44,12 @@ pool.query('SELECT COUNT(*) FROM users WHERE telegram_id='+id+')', function (err
 	        	console.log("Can't make this Bid: "+price+" < current price("+name+")");
 				res.end(querystring.stringify('{"text":"Ваша ставка не принята: предложите цену, выше текущей - '+res.rows[0].price+'"}'));
 			}
-			else if(Math.round(getTime()/1000) < res.rows[0].start_time)
+			else if(Math.round(g(new Data().getTime())()/1000) < res.rows[0].start_time)
 			{
 	        	console.log("Can't make this Bid: auction "+name+" don't start yet");
 				res.end(querystring.stringify('{"text":"Ваша ставка не принята: аукцион '+name+' ещё не начался"}'));
 			}
-			else if(Math.round(getTime()/1000) >= res.rows[0].end_time)
+			else if(Math.round(g(new Data().getTime())()/1000) >= res.rows[0].end_time)
 			{
 	        	console.log("Can't make this Bid: auction "+name+" already finished");
 				res.end(querystring.stringify('{"text":"Ваша ставка не принята: аукцион '+name+' уже закончился"}'));
