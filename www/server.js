@@ -97,7 +97,7 @@ function accept (req, res)
                 	}
                     break;
 				default:
-					console.log("Wrong method!"+json.method);
+					console.log("Wrong method: "+json.method);
 					throw "Wrong method";
 			}
         	});
