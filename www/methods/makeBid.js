@@ -1,7 +1,4 @@
-var name = json.lot;
-var price = json.price;
-
-function addUser(id, other='NULL')
+function addUser(pool, id, other='NULL')
 {
 	pool.query('INSERT INTO users VALUES ('+id+', '+other+')', function (err, res)
 	{
@@ -14,19 +11,23 @@ function addUser(id, other='NULL')
 	return;
 }
 
+module.exports = function(pool, id, json) {
+var name = json.lot;
+var price = json.price;
+
 pool.query('SELECT COUNT(*) FROM users WHERE telegram_id='+id+')', function (err, res)
 {
         if(err)
         {
                 console.log(err);
                 string = err;
-                res.end (querystring.stringify('{"text":string}'));
+                res.end (querystring.stringify('{"text":"'+err+'"}'));
                 return 0;
         }
         if(res) console.log("User "+id+"authorized");
         else
         {
-        	addUser(id);
+        	addUser(pool, id);
         	console.log("Added new user with telegram id='"+id+"'");
         }
         
@@ -34,24 +35,23 @@ pool.query('SELECT COUNT(*) FROM users WHERE telegram_id='+id+')', function (err
 	        if(err)
 	        {
                 console.log(err);
-                string = err;
-                res.end (querystring.stringify('{"text":string}'));
+                res.end (querystring.stringify('{"text":"'+err+'"}'));
                 return;
 	        }
 	        if(price < res.rows[0].price)
 	        {
 	        	console.log("Can't make this Bid: "+price+" < current price("+name+")");
-				res.end(querystring.stringify('{"text":"Ваша ставка не принята: предложите цену, выше текущей - "+res.rows[0].price}'));
+				res.end(querystring.stringify('{"text":"Ваша ставка не принята: предложите цену, выше текущей - '+res.rows[0].price+'"}'));
 			}
 			else if(Math.round(getTime()/1000) < res.rows[0].start_time)
 			{
 	        	console.log("Can't make this Bid: auction "+name+" don't start yet");
-				res.end(querystring.stringify('{"text":"Ваша ставка не принята: аукцион "+name+" ещё не начался"}'));
+				res.end(querystring.stringify('{"text":"Ваша ставка не принята: аукцион '+name+' ещё не начался"}'));
 			}
 			else if(Math.round(getTime()/1000) >= res.rows[0].end_time)
 			{
 	        	console.log("Can't make this Bid: auction "+name+" already finished");
-				res.end(querystring.stringify('{"text":"Ваша ставка не принята: аукцион "+name+" уже закончился"}'));
+				res.end(querystring.stringify('{"text":"Ваша ставка не принята: аукцион '+name+' уже закончился"}'));
 			}
 			else
 			{
@@ -61,3 +61,4 @@ pool.query('SELECT COUNT(*) FROM users WHERE telegram_id='+id+')', function (err
 			}
 		});
 });
+}
