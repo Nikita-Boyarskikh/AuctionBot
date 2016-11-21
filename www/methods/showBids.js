@@ -1,3 +1,4 @@
+module.exports = function(pool, id, json='NULL') {
 pool.query('SELECT name FROM lots WHERE winner_id='+id, function (err, res) {
 	if(err)
 	{
@@ -12,3 +13,4 @@ pool.query('SELECT name FROM lots WHERE winner_id='+id, function (err, res) {
 	}
 	res.end (querystring.stringify('{"text":string}'));
 });
+}
