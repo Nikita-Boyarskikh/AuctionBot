@@ -1,5 +1,6 @@
-function addUser(poll, id, other='NULL')
+function addUser(poll, id, other)
 {
+	if(other===undefined) other = 'NULL';
 	pool.query('INSERT INTO users VALUES ('+id+', '+other+')', function (err, res)
 	{
         if(err)
