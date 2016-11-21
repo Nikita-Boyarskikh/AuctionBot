@@ -53,7 +53,7 @@ function accept (req, res)
 			switch(json.method) {
 				case "getLotInfo":
                 	try {
-                		require("./methods/getLotInfo");
+                		require("./methods/getLotInfo")(pool, id, json);
                 		console.log("Called getLotInfo with params(id='"+id+"', lot='"+lot+"')");
                 	} catch(e) {
                 		console.log("getLotInfo with params(id='"+id+"', lot='"+lot+"') is failed with error("+e+")");
@@ -62,7 +62,7 @@ function accept (req, res)
 					break;
                 case "showLots":
                 	try {
-                		require("./methods/showLots");
+                		require("./methods/showLots")(pool, id, json);
                 		console.log("Called showLots with params(id='"+id+"')");
                 	} catch(e) {
                 		console.log("showLots with params(id='"+id+"') is failed with error("+e+")");
@@ -71,7 +71,7 @@ function accept (req, res)
                     break;
                 case "showBids":
                 	try {
-                		require("./methods/showBids");
+                		require("./methods/showBids")(pool, id, json);
                 		console.log("Called showBids with params(id='"+id+"')");
                 	} catch(e) {
                 		console.log("showBids with params(id='"+id+"') is failed with error("+e+")");
@@ -80,7 +80,7 @@ function accept (req, res)
                     break;
                 case "makeBid":
                 	try {
-                		require("./methods/makeBid");
+                		require("./methods/makeBid")(pool, id, json);
                 		console.log("Called makeBid with params(id='"+id+"', lot='"+lot+"', price='"+price+"')");
                 	} catch(e) {
                 		console.log("makeBid with params(id='"+id+"', lot='"+lot+"', price='"+price+"') is failed with error("+e+")");
@@ -89,7 +89,7 @@ function accept (req, res)
                     break;
                 case "createLot":
                 	try {
-                		require("./methods/createLot");
+                		require("./methods/createLot")(pool, id, json);
                 		console.log("Called createLot with params(id='"+id+"', lot='"+name+"', description='"+description+"', price='"+price+"', start='"+start+"', end='"+end+"')");
                 	} catch(e) {
                 		console.log("createLot with params(id='"+id+"', lot='"+name+"', description='"+description+"', price='"+price+"', start='"+start+"', end='"+end+"') is failed with error("+e+")");

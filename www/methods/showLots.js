@@ -1,4 +1,5 @@
-module.exports = function(pool, id, json='NULL') {
+module.exports = function(pool, id, json) {
+if(json===undefined){};
 pool.query('SELECT name, start_time, end_time FROM lots WHERE owner_id='+id, function (err, res) {
         if(err)
         {
