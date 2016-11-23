@@ -42,27 +42,27 @@ function accept (req, res)
         });
         try {
     	    req.on('end',function()
-        	{
-			try {
-				var json = JSON.parse(querystring.parse(body).q);
-			} catch(e) {
-				console.log("Can't parce this POST: "+querystring.parse(body).q);
-				return 1;
-			}
-			var id = json.id;
-			switch(json.method) {
-				case "getLotInfo":
+	    {
+		try {
+			var json = JSON.parse(querystring.parse(body).q);
+		} catch(e) {
+			console.log("Can't parce this POST: "+querystring.parse(body).q);
+			return 1;
+		}
+		var id = json.id;
+		switch(json.method) {
+		case "getLotInfo":
                 	try {
-                		require("./methods/getLotInfo")(pool, id, json);
-                		console.log("Called getLotInfo with params(id='"+id+"', lot='"+lot+"')");
+                		require("./methods/getLotInfo")(pool, id, json, res);
+                		console.log("Called getLotInfo with params(id='"+id+"', lot='"+json.lot+"')");
                 	} catch(e) {
-                		console.log("getLotInfo with params(id='"+id+"', lot='"+lot+"') is failed with error("+e+")");
+                		console.log("getLotInfo with params(id='"+id+"', lot='"+json.lot+"') is failed with error("+e+")");
                 		res.end(querystring.stringify('{"text":"Извините, не удалось получить информацию об этом лоте, попробуйте позже :("}'));
                 	}
 					break;
                 case "showLots":
                 	try {
-                		require("./methods/showLots")(pool, id, json);
+                		require("./methods/showLots")(pool, id, json, res);
                 		console.log("Called showLots with params(id='"+id+"')");
                 	} catch(e) {
                 		console.log("showLots with params(id='"+id+"') is failed with error("+e+")");
@@ -71,7 +71,7 @@ function accept (req, res)
                     break;
                 case "showBids":
                 	try {
-                		require("./methods/showBids")(pool, id, json);
+                		require("./methods/showBids")(pool, id, json, res);
                 		console.log("Called showBids with params(id='"+id+"')");
                 	} catch(e) {
                 		console.log("showBids with params(id='"+id+"') is failed with error("+e+")");
@@ -80,25 +80,25 @@ function accept (req, res)
                     break;
                 case "makeBid":
                 	try {
-                		require("./methods/makeBid")(pool, id, json);
-                		console.log("Called makeBid with params(id='"+id+"', lot='"+lot+"', price='"+price+"')");
+                		require("./methods/makeBid")(pool, id, json, res);
+                		console.log("Called makeBid with params(id='"+id+"', lot='"+json.lot+"', price='"+json.price+"')");
                 	} catch(e) {
-                		console.log("makeBid with params(id='"+id+"', lot='"+lot+"', price='"+price+"') is failed with error("+e+")");
+                		console.log("makeBid with params(id='"+id+"', lot='"+json.lot+"', price='"+json.price+"') is failed with error("+e+")");
                 		res.end(querystring.stringify('{"text":"Извините, не удалось сделать ставку, попробуйте позже :("}'));
                 	}
                     break;
                 case "createLot":
                 	try {
-                		require("./methods/createLot")(pool, id, json);
-                		console.log("Called createLot with params(id='"+id+"', lot='"+name+"', description='"+description+"', price='"+price+"', start='"+start+"', end='"+end+"')");
+                		require("./methods/createLot")(pool, id, json, res);
+                		console.log("Called createLot with params(id='"+id+"', lot='"+json.name+"', description='"+json.description+"', price='"+json.price+"', start='"+json.start+"', end='"+json.end+"')");
                 	} catch(e) {
-                		console.log("createLot with params(id='"+id+"', lot='"+name+"', description='"+description+"', price='"+price+"', start='"+start+"', end='"+end+"') is failed with error("+e+")");
+                		console.log("createLot with params(id='"+id+"', lot='"+json.name+"', description='"+json.description+"', price='"+json.price+"', start='"+json.start+"', end='"+json.end+"') is failed with error("+e+")");
                 		res.end(querystring.stringify('{"text":"Извините, не удалось добавить новый лот, попробуйте позже :("}'));
                 	}
-                    break;
-				default:
-					console.log("Wrong method: "+json.method);
-					throw "Wrong method";
+			break;
+			default:
+				console.log("Wrong method: "+json.method);
+				throw "Wrong method";
 			}
         	});
 		} catch (e)

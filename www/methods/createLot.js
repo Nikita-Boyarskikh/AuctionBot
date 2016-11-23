@@ -1,18 +1,19 @@
+var querystring = require("querystring");
 function addUser(poll, id, other)
 {
 	if(other===undefined) other = 'NULL';
-	pool.query('INSERT INTO users VALUES ('+id+', '+other+')', function (err, res)
+	pool.query('INSERT INTO users ("telegram_id", "other_information(feature)")  VALUES ('+id+', '+other+')', function (err, res)
 	{
         if(err)
         {
                 console.log("Can't create new user with telegram id='"+id+"'");
-        		return;
+       		return;
         }
 	});
 	return;
 }
 
-module.exports = function(pool, id, json) {
+module.exports = function(pool, id, json, result) {
 var name = json.lot;
 var description = json.discription;
 var price = json.price;
@@ -26,7 +27,7 @@ pool.query('SELECT COUNT(*) FROM users WHERE telegram_id='+id+')', function (err
         if(err)
         {
                 console.log(err);
-                res.end (querystring.stringify('{"text":'+err+'}'));
+                result.end (querystring.stringify({"text":err}));
                 return 0;
         }
         if(res) console.log("User "+id+"authorized");
@@ -36,14 +37,14 @@ pool.query('SELECT COUNT(*) FROM users WHERE telegram_id='+id+')', function (err
         	console.log("Added new user with telegram id='"+id+"'");
         }
         
-		pool.query('INSERT INTO lots VALUES ('+id+', '+description+', '+price+', '+start+', '+end+', '+')', function (err, res) {
+		pool.query('INSERT INTO lots ("owner_id", "description", "price", "start", "end, "winnet_id") VALUES ('+id+', 'name', '+description+', '+price+', '+start+', '+end+', '+id+')', function (err, res) {
 	        if(err)
 	        {
                 console.log(err);
-                res.end (querystring.stringify('{"text":'+err+'}'));
+                result.end (querystring.stringify({"text":err}));
                 return;
 	        }
-			res.end(querystring.stringify('{"text":"Ваш лот '+name+' успешно добавлен"}'));
+			result.end(querystring.stringify({"text":"Ваш лот "+name+" успешно добавлен"}));
 		});
 });
 }
